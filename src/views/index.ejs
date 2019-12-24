@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partials/head %>
+</head>
+
+<body class="container">
+    <div class="col-md-6 col-md-offset-3">
+        <button class="btn btn-danger" href="/logout" onClick='document.location.href="/logout"'>
+            Logout
+          </button>
+        <h1>Hello <%= name %></h1>
+        <button class="btn btn-success" id="show-metrics">
+            Bring the metrics
+        </button>
+        <div id="metrics"></div>
+    </div>
+</body>
+
+</html>
+<script>
+    $('#show-metrics').click((e) => {
+        e.preventDefault();
+        $.getJSON("/metrics.json", {}, (data) => {
+            const content = data.map(d => {
+                return 'timestamp: ' + d.timestamp + ', value: ' + d.value + '';
+            })
+            $('#metrics').append(content.join("\n"));
+        });
+    })   
+</script>
+
+<!-- <script src="/js/jquery-3.4.1.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
